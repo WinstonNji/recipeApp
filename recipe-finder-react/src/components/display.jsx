@@ -28,12 +28,14 @@ const  DisplayRecipe = () =>{
                     
                         <div>
                             <p className="font-semibold text-center mb-3 underline decoration-dashed ">Instructions</p>
-                            <p className="max-h-36 overflow-y-auto p-3 bg-gray-500 
-        [&::-webkit-scrollbar]:w-2
-        [&::-webkit-scrollbar-track]:bg-gray-100
-        [&::-webkit-scrollbar-thumb]:bg-gray-300
-        dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-        dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">{recipe.instructions}</p>
+                            <p className="max-h-36 overflow-y-auto p-2 box-border 
+                            [&::-webkit-scrollbar]:w-2
+                            [&::-webkit-scrollbar-track]:bg-gray-100
+                            [&::-webkit-scrollbar-track]:rounded-full
+                            [&::-webkit-scrollbar-thumb]:bg-orange-300
+                            [&::-webkit-scrollbar-thumb]:rounded-full
+                            dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                            dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">{bold(recipe.instructions)}</p>
                         </div>
                     </div>
                 </div>
@@ -46,10 +48,12 @@ export default DisplayRecipe
 
 const displayIngredients = (ingredientArr) => {
     return (
-        <ul className="text-center max-h-36 overflow-y-scroll p-3 bg-gray-500 
+        <ul className="text-center max-h-32 overflow-y-scroll p-3  
         [&::-webkit-scrollbar]:w-2
         [&::-webkit-scrollbar-track]:bg-gray-100
-        [&::-webkit-scrollbar-thumb]:bg-gray-300
+        [&::-webkit-scrollbar-track]:rounded-full
+        [&::-webkit-scrollbar-thumb]:bg-orange-300
+        [&::-webkit-scrollbar-thumb]:rounded-full
         dark:[&::-webkit-scrollbar-track]:bg-neutral-700
         dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
             {ingredientArr.map((ingredient, index) => (
@@ -57,6 +61,18 @@ const displayIngredients = (ingredientArr) => {
             ))}
         </ul>
     )
+}
+
+const bold = (ingredient) => {
+    const words = ingredient.split(' ')
+
+    return words.map((word) => {
+        const isBold = isNaN(word) === false || ["cups", "tsp", "cup", "minutes", "minute"].includes(word)
+
+        return (
+            <span className={isBold ? 'font-semibold' : 'font-normal'}>{word}{' '}</span>
+        )
+    })
 }
 
 
