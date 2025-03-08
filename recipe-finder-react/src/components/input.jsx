@@ -19,8 +19,16 @@ function InputRecipe({children}){
 
         try {
             const response = await fetch(url, options);
-            const result = await response.text();
+            const result = await response.json();
             console.log(result);
+            const recipes = result.d.map((recipe) => ({
+                id: recipe.id,
+                title: recipe.Title,
+                image : recipe.Image,
+                ingredients : Object.values(recipe.Ingredients),
+                instructions: recipe.Instructions
+            }))
+            setRecipeArr(recipes)
         } catch (error) {
             console.error(error);
         }
@@ -36,13 +44,15 @@ function InputRecipe({children}){
         event.preventDefault()
         if(recipe){
             fetchRecipes(recipe)
+            setUserRecipe('')
         }else{
             alert("Please enter a recipe or ingredient!")
+            setUserRecipe("")
         }
     }
 
     return (
-        <InputRecipeManager.Provider value={recipeArr}>
+        <InputRecipeManager.Provider value={{recipeArr}}>
             <div className="flex justify-center">
                 <form className="flex relative bg-white w-1/2 rounded-md shadow-xl" onSubmit={searchTransaction} action="">
                     <input 
